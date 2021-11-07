@@ -1,14 +1,17 @@
 package mate.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import mate.exception.DataProcessingException;
 import mate.lib.Dao;
 import mate.model.Driver;
 import mate.util.ConnectionUtil;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class DriverDaoImpl implements DriverDao {
@@ -17,7 +20,7 @@ public class DriverDaoImpl implements DriverDao {
         String query = "INSERT INTO drivers (name, license_number, login, password) "
                 + "VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement createDriverStatement = connection.prepareStatement(query,
+                 PreparedStatement createDriverStatement = connection.prepareStatement(query,
                         Statement.RETURN_GENERATED_KEYS)) {
             createDriverStatement.setString(1, driver.getName());
             createDriverStatement.setString(2, driver.getLicenseNumber());
